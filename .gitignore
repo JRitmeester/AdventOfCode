@@ -1,0 +1,5 @@
+.session_id
+.DS_Store
+.venv
+.git
+__pycache__

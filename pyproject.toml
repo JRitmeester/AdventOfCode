@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "aoc"
+version = "0.1.0"
+description = "Everything you need for your Advent of Code challenges!"
+authors = ["JRitmeester <jeroen.c.ritmeester@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+matplotlib = "^3.6.2"
+numpy = "^1.23.4"
+advent-of-code-data = "^1.2.0"
+pre-commit = "^2.20.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+mypy = "^0.991"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
