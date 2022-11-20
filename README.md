@@ -1,4 +1,6 @@
-# AdventOfCode
+# Advent of code
+
+![AoC](aoc.jpg)
 
 ![](https://img.shields.io/badge/Stars%202015%20⭐-0-yellow)
 ![](https://img.shields.io/badge/Stars%202020%20⭐-1-yellow)
