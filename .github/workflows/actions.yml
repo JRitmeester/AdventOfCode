@@ -1,0 +1,16 @@
+name: AOC Stars
+run-name: AOC Stars
+on: [push]
+jobs:
+  Collect-Stars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Awesome Badge
+        uses: schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.AOC_GIST_SECRET }}
+          gistID: e120a68967fcee14df99b4a8dc70e3f4
+          filename: stars.json
+          label: Collected stars
+          message: Gotta solve 'em all!
+          color: yellow
