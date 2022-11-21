@@ -1,8 +1,10 @@
 import sys
 from pathlib import Path
+
 sys.path.append(str(Path.cwd()))
 from util.project import load_input_data
-input_ = load_input_data(day={}, year={})
+
+input_ = load_input_data(Path(__file__).parent / "input.txt", day=1, year=2016)
 
 
 def first():

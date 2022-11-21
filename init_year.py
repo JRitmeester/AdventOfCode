@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 import argparse
 import datetime
+from util.project import load_input_data
 
 
 def _assert_session_id() -> None:
@@ -43,10 +44,13 @@ def _init_year(year) -> None:
             if not python_file.exists():
                 python_file.write_text(template.format(day_number, year))
 
-            input_file = day_folder / "input.txt"
-            if not input_file.exists():
-                input_data = get_data(day=day_number, year=year)
-                input_file.write_text(input_data)
+            load_input_data(
+                input_file=day_folder / "input.txt", day=day_number, year=year
+            )
+            # input_file = day_folder / "input.txt"
+            # if not input_file.exists():
+            #     input_data = get_data(day=day_number, year=year)
+            #     input_file.write_text(input_data)
 
 
 if __name__ == "__main__":

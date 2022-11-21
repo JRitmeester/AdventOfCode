@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import List, Union
 from functools import wraps
 import time
+from aocd import get_data
 
 
 def print_timing(func: callable) -> callable:
@@ -21,9 +22,14 @@ def print_timing(func: callable) -> callable:
     return wrapper
 
 
-def load_input_data(day: int, year: int, split_by=None) -> Union[str, List[str]]:
-    data_path = Path.cwd() / str(year) / f"Day {str(day).zfill(2)}" / "input.txt"
-    data = data_path.read_text()
+def load_input_data(
+    input_file: Path, day: int, year: int, split_by=None
+) -> Union[str, List[str]]:
+    if not input_file.exists():
+        data = get_data(day=day, year=year)
+        input_file.write_text(data)
+    else:
+        data = input_file.read_text()
 
     if split_by:
         return data.split(split_by)
