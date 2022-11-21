@@ -4,7 +4,8 @@ from pathlib import Path
 sys.path.append(str(Path.cwd()))
 from util.project import load_input_data
 
-input_ = load_input_data(Path(__file__).parent / "input.txt", day=1, year=2016)
+def preprocess_input(original_input):
+    return original_input
 
 
 def first():
@@ -15,5 +16,8 @@ def second():
     return None
 
 
-print(first())
-print(second())
+if __name__ == "__main__":
+    original_input = load_input_data(Path(__file__).parent / "input.txt", day={}, year={}, split_by='\n')
+    input_ = preprocess_input(original_input)
+    print("The answer to part 1 is:", first())
+    print("The answer to part 2 is:", second())
