@@ -3,6 +3,7 @@ from typing import List, Union
 from functools import wraps
 import time
 from aocd import get_data
+import numpy as np
 
 
 def print_timing(func: callable) -> callable:
@@ -35,3 +36,10 @@ def load_input_data(
         return data.split(split_by)
     else:
         return data
+
+
+def input_to_np_arr(input: str, dtype=None):
+    arr = np.array(input)
+    if dtype:
+        arr = arr.astype(dtype)
+    return arr
