@@ -1,8 +1,5 @@
 from pathlib import Path
 from typing import List, Union
-
-import shutil
-import argparse
 from functools import wraps
 import time
 
@@ -32,6 +29,3 @@ def load_input_data(day: int, year: int, split_by=None) -> Union[str, List[str]]
         return data.split(split_by)
     else:
         return data
-
-
-

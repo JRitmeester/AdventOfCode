@@ -3,3 +3,4 @@
 .venv
 .git
 __pycache__
+/2021/Day 11/images_part_2/*.png
