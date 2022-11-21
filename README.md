@@ -1,4 +1,4 @@
-<img src="aoc.jpg">
+<img src="aoc.webp">
 <h1> My Advent of Code Journey </h1>
 
 ![](https://img.shields.io/badge/Stars%202015%20⭐-0-yellow)
