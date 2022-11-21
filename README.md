@@ -11,8 +11,8 @@ Welcome to my Advent of Code repository! I tried to spice this repo up with a bu
 </p>
 <ul>
   <li> CLI utility to setup a new year, with all the daily files ready to go.</li>
-  <li>Automatic data collection through [advent-of-code-data](https://github.com/wimglenn/advent-of-code-data)</li>
+  <li>Automatic data collection through <a href=""https://github.com/wimglenn/advent-of-code-data>advent-of-code-data</a></li>
   <li>Time profiling using a decorator function</li>
-  <li>Yearly star tracker in the README using Github Actions and [AoC Badges](https://github.com/marketplace/actions/aoc-badges)</li>
+  <li>Yearly star tracker in the README using Github Actions and <a href="https://github.com/marketplace/actions/aoc-badges">AoC Badges</a></li>
   <li>Virtual environment and dependency management with Pyenv and Poetry</li>
-<li>Automated re-commit checks like Mypy and Black formatting through [pre-commit](https://pre-commit.com/)</li>
+<li>Automated re-commit checks like Mypy and Black formatting through <a href="https://pre-commit.com/">pre-commit</a></li>
