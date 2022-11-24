@@ -1,30 +1,36 @@
-import pytest
+import os
 import sys
 from pathlib import Path
-import os
 
-sys.path.append(str(Path(__file__).parent.parent.parent))
+import pytest
+
+# Add the repository root the sys.path in order to import the helper modules.
+file = Path(__file__)
+REPO_ROOT = next(
+    (parent for parent in file.parents if parent.name == "Advent of Code"),
+    None,
+)
+sys.path.append(REPO_ROOT.as_posix())
+import day{}
+
 from aoc_util.helpers import load_input_data
-import day{0}
-import numpy as np
-
-cwd = Path(__file__).parent
 
 
 @pytest.fixture
 def input_text():
-    input_ = load_input_data(cwd / "example_input.txt", day={1}, year={2})
-    return day{0}.preprocess_input(input_)
+    input_ = load_input_data(
+        file.parent / "example_input.txt", day={}, year={}
+    )
+    return day01.preprocess_input(input_)
 
 
 def test_first(input_text):
-    assert False
+    pass
 
 
 def test_second(input_text):
-    assert False
+    pass
 
 
 if __name__ == "__main__":
-    os.chdir(cwd)
-    os.system("pytest . -s")
+    os.system(f'pytest "{file}" -s')
