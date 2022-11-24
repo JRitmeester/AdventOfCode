@@ -3,5 +3,6 @@
 .venv
 .git
 __pycache__
-/2021_old/Day 11/images_part_2/*.png
+/2021/Day 11/images_part_2/*.png
 .vscode/settings.json
+/2021_old
