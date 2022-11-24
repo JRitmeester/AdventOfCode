@@ -5,8 +5,9 @@ from pathlib import Path
 import pytest
 
 # Add the repository root the sys.path in order to import the helper modules.
+file = Path(__file__)
 REPO_ROOT = next(
-    (parent for parent in Path(__file__).parents if parent.name == "Advent of Code"),
+    (parent for parent in file.parents if parent.name == "Advent of Code"),
     None,
 )
 sys.path.append(REPO_ROOT.as_posix())
@@ -32,5 +33,4 @@ def test_second(input_text):
 
 
 if __name__ == "__main__":
-    print(Path.cwd())
-    os.system(f'pytest "{Path(__file__)}" -s')
+    os.system(f'pytest "{file}" -s')
