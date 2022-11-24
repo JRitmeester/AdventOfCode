@@ -1,21 +1,31 @@
-import numpy as np
+import sys
 from pathlib import Path
-import matplotlib.pyplot as plt
+import numpy as np
+
+sys.path.append(str(Path.cwd()))
+from aoc_util.helpers import load_input_data, input_to_np_arr
 
 
-def main():
-    input_raw = (Path(__file__).parent / "input.txt").read_text()
-    numbers = np.array(input_raw.split("\n")[:-1]).astype(np.int)
+def preprocess_input(input_text: str):
+    return input_to_np_arr(input_text.split("\n"), dtype=int)
 
-    num_increasing = np.count_nonzero(np.convolve(numbers, [1, -1], mode="valid") > 0)
-    print("Answer part 1:", num_increasing)
 
-    sliding_signal = np.convolve(numbers, [1, 1, 1], mode="valid")
-    num_increasing = np.count_nonzero(
+def first(input):
+    n_increasing = np.count_nonzero(np.convolve(input, [1, -1], mode="valid") > 0)
+    return n_increasing
+
+
+def second(input):
+    sliding_signal = np.convolve(input, [1, 1, 1], mode="valid")
+    n_increasing = np.count_nonzero(
         np.convolve(sliding_signal, [1, -1], mode="valid") > 0
     )
-    print("Answer part 2:", num_increasing)
+    return n_increasing
 
 
 if __name__ == "__main__":
-    main()
+    original_input = load_input_data(
+        Path(__file__).parent / "input.txt", day=1, year=2021
+    )
+    print("The answer to part 1 is:", first())
+    print("The answer to part 2 is:", second())
