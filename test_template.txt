@@ -11,25 +11,27 @@ REPO_ROOT = next(
     None,
 )
 sys.path.append(REPO_ROOT.as_posix())
-import day{0}
+import day{0} as day
 
 from aoc_util.helpers import load_input_data
 
 
 @pytest.fixture
 def input_text():
-    input_ = load_input_data(
+    input = load_input_data(
         file.parent / "example_input.txt", day={1}, year={2}
     )
-    return day{0}.preprocess_input(input_)
+    return day.preprocess_input(input)
 
 
 def test_first(input_text):
-    pass
+    result = day.first(input_text)
+    assert False
 
 
 def test_second(input_text):
-    pass
+    result = day.second(input_text)
+    assert False
 
 
 if __name__ == "__main__":
