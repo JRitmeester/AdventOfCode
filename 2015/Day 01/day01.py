@@ -2,8 +2,8 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parents[2]))
-from util.project import load_input_data
-from util.project import print_timing
+from aoc_util.helpers import load_input_data
+from aoc_util.helpers import print_timing
 
 input_ = load_input_data(day=1, year=2015)
 
