@@ -5,7 +5,7 @@ from pathlib import Path
 import shutil
 import argparse
 import datetime
-from util.project import load_input_data
+from aoc_util.helpers import load_input_data
 
 
 def _assert_session_id() -> None:
@@ -28,7 +28,8 @@ def _assert_session_id() -> None:
 
 
 def _init_year(year) -> None:
-    template = (Path.cwd() / "template.txt").read_text()
+    challenge_template = (Path.cwd() / "challenge_template.txt").read_text()
+    test_template = (Path.cwd() / "test_template.txt").read_text()
 
     year_folder = Path.cwd() / str(year)
     year_folder.mkdir(exist_ok=True)
@@ -42,15 +43,21 @@ def _init_year(year) -> None:
 
             python_file = day_folder / f"day{day_number_fmt}.py"
             if not python_file.exists():
-                python_file.write_text(template.format(day_number, year))
+                python_file.write_text(challenge_template.format(day_number, year))
+
+            example_input_file = day_folder / f"example_input.txt"
+            if not example_input_file.exists():
+                example_input_file.touch()
+
+            test_file = day_folder / f"day{day_number_fmt}_test.py"
+            if not test_file.exists():
+                test_file.write_text(
+                    test_template.format(day_number_fmt.lower(), day_number, year)
+                )
 
             load_input_data(
                 input_file=day_folder / "input.txt", day=day_number, year=year
             )
-            # input_file = day_folder / "input.txt"
-            # if not input_file.exists():
-            #     input_data = get_data(day=day_number, year=year)
-            #     input_file.write_text(input_data)
 
 
 if __name__ == "__main__":
