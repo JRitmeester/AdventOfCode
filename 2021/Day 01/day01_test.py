@@ -4,15 +4,12 @@ from pathlib import Path
 
 import pytest
 
-repo_root = next(
-    (
-        parent
-        for parent in Path(__file__).parents
-        if parent.name.lower() == "advent of code"
-    ),
+# Add the repository root the sys.path in order to import the helper modules.
+REPO_ROOT = next(
+    (parent for parent in Path(__file__).parents if parent.name == "Advent of Code"),
     None,
 )
-sys.path.append(repo_root.as_posix())
+sys.path.append(REPO_ROOT.as_posix())
 import day01
 
 from aoc_util.helpers import load_input_data
@@ -35,5 +32,5 @@ def test_second(input_text):
 
 
 if __name__ == "__main__":
-    print(Path(__file__))
+    print(Path.cwd())
     os.system(f'pytest "{Path(__file__)}" -s')
