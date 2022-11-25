@@ -2,31 +2,9 @@
 
 import argparse
 import datetime
-import shutil
 from pathlib import Path
 
-from aocd import get_data
-
-from aoc_util.helpers import load_input_data
-
-
-def _assert_session_id() -> None:
-    """
-    Ensures the Session ID is set in $HOME/.config/aocd/token, from which aocd retrieves it automatically. If it is
-    not set already, this function will try to retrieve it from the .session_id file from the root of the project
-    directory.
-    """
-    session_id_file = Path("~").expanduser() / ".config/aocd/token"
-    if not session_id_file.exists():
-        session_id_local = Path.cwd() / ".session_id"
-        if session_id_local.exists():
-            session_id_file.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy(session_id_local, session_id_file)
-        else:
-            print(
-                f"No session ID could be found in {session_id_file.as_posix()} or {session_id_local.as_posix()}."
-            )
-    return session_id_file.exists()
+from aoc_util.helpers import assert_session_id, load_input_data
 
 
 def _init_challenges(
@@ -39,7 +17,7 @@ def _init_challenges(
     year_folder = Path.cwd() / str(year)
     year_folder.mkdir(exist_ok=True)
 
-    if _assert_session_id():
+    if assert_session_id():
         for day_number in days:
             challenge_template = (Path.cwd() / "challenge_template.txt").read_text()
             test_template = (Path.cwd() / "test_template.txt").read_text()
