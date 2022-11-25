@@ -40,7 +40,6 @@ def _init_challenges(
     year_folder.mkdir(exist_ok=True)
 
     if _assert_session_id():
-        print("!")
         for day_number in days:
             challenge_template = (Path.cwd() / "challenge_template.txt").read_text()
             test_template = (Path.cwd() / "test_template.txt").read_text()
