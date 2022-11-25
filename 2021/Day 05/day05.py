@@ -1,57 +1,77 @@
-import numpy as np
+import sys
 from pathlib import Path
+
 import matplotlib.pyplot as plt
-from pprint import pprint
+import numpy as np
+
+# Add the repository root the sys.path in order to import the helper modules.
+file = Path(__file__)
+REPO_ROOT = next(
+    (parent for parent in file.parents if parent.name.lower() == "advent of code"),
+    None,
+)
+sys.path.append(REPO_ROOT.as_posix())
+
+from aoc_util.helpers import load_input_data
 
 
-def create_map(lines: list, include_diagonal: bool):
-    grid = np.zeros((2000, 2000))
+def create_map(lines: list, include_diagonal: bool, size=(2000, 2000)):
+    grid = np.zeros(size)
 
-    max_x = 0
-    max_y = 0
+    # max_x = 0
+    # max_y = 0
 
     for line in lines:
-        start = np.array(line[0])
-        end = np.array(line[1])
-        delta = np.array([end[0] - start[0], end[1] - start[1]])
-        length = np.max(np.abs(delta))
-        dir = delta / length
+        start, end = np.array(line).astype(float)
+        delta = end - start
+        lengths = np.abs(delta)
+        dir = delta / np.max(lengths)
 
         if not include_diagonal:
             if np.sum(np.abs(dir)) != 1:
                 continue
 
-        for step in range(length + 1):
-            current = (start + step * dir).astype(np.int)
+        n_steps = np.abs(np.max(lengths).astype(int))
+        for step in range(n_steps + 1):
+            current = (start + step * dir).astype(int)
             grid[current[1], current[0]] += 1
-            max_x = max(max_x, current[0])
-            max_y = max(max_y, current[1])
+            # max_x = max(max_x, current[0])
+            # max_y = max(max_y, current[1])
 
-    grid = grid[:max_y, :max_x]
-
-    return grid
+    return grid.astype(int)
 
 
-def main():
-    input_raw = (Path(__file__).parent / "input.txt").read_text()
-    input_split = input_raw.split("\n")[:-1]
+def preprocess_input(original_input: str) -> list[tuple[int]]:
+    input_split = original_input.split("\n")
     lines = [
         [tuple(int(el) for el in point.split(",")) for point in line.split(" -> ")]
         for line in input_split
     ]
+    return lines
 
-    # Part 1
+
+def first(lines, do_plot=False):
     grid = create_map(lines, include_diagonal=False)
-    plt.imshow(grid)
-    print("Answer part 1:", np.count_nonzero(grid > 1))
 
-    # Part 2
+    if do_plot:
+        plt.imshow(grid)
+        plt.show()
+
+    return np.count_nonzero(grid > 1)
+
+
+def second(lines, do_plot=False):
     grid = create_map(lines, include_diagonal=True)
-    plt.imshow(grid)
-    print("Answer part 2:", np.count_nonzero(grid > 1))
 
-    plt.show()
+    if do_plot:
+        plt.imshow(grid)
+        plt.show()
+
+    return np.count_nonzero(grid > 1)
 
 
 if __name__ == "__main__":
-    main()
+    original_input = load_input_data(file.parent / "input.txt", day=1, year=2021)
+    input_ = preprocess_input(original_input)
+    print("The answer to part 1 is:", first(input_))
+    print("The answer to part 2 is:", second(input_))
