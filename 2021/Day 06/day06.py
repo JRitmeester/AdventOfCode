@@ -45,7 +45,7 @@ def second(input) -> int:
 
 
 if __name__ == "__main__":
-    original_input = load_input_data(file.parent / "input.txt", day=1, year=2021)
+    original_input = load_input_data(file.parent / "input.txt", day=6, year=2021)
     preprocessed_input = preprocess_input(original_input)
     print("The answer to part 1 is:", first(preprocessed_input))
     print("The answer to part 2 is:", second(preprocessed_input))

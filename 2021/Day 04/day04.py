@@ -118,7 +118,7 @@ def second(sequence: np.ndarray, cards: list[Card]) -> int:
 
 
 if __name__ == "__main__":
-    original_input = load_input_data(file.parent / "input.txt", day=1, year=2021)
+    original_input = load_input_data(file.parent / "input.txt", day=4, year=2021)
     sequence, cards = preprocess_input(original_input)
     print("The answer to part 1 is:", first(sequence, cards))
     print("The answer to part 2 is:", second(sequence, cards))

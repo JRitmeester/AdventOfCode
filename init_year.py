@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
-from aocd import get_data
-from pathlib import Path
-import shutil
 import argparse
 import datetime
+import shutil
+from pathlib import Path
+
+from aocd import get_data
+
 from aoc_util.helpers import load_input_data
 
 

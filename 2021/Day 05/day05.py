@@ -71,7 +71,7 @@ def second(lines, do_plot=False):
 
 
 if __name__ == "__main__":
-    original_input = load_input_data(file.parent / "input.txt", day=1, year=2021)
+    original_input = load_input_data(file.parent / "input.txt", day=5, year=2021)
     input_ = preprocess_input(original_input)
     print("The answer to part 1 is:", first(input_))
     print("The answer to part 2 is:", second(input_))
