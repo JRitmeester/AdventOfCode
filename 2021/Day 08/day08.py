@@ -1,7 +1,17 @@
-import numpy as np
+import sys
 from pathlib import Path
-import matplotlib.pyplot as plt
-from pprint import pprint
+
+import numpy as np
+
+# Add the repository root the sys.path in order to import the helper modules.
+file = Path(__file__)
+REPO_ROOT = next(
+    (parent for parent in file.parents if parent.name.lower() == "advent of code"),
+    None,
+)
+sys.path.append(REPO_ROOT.as_posix())
+
+from aoc_util.helpers import load_input_data
 
 
 class Thingy:
@@ -83,37 +93,32 @@ class Thingy:
         return [x for x in self.unique_signal if len(x) == length]
 
 
-def main():
-    input_raw = (Path(__file__).parent / "input.txt").read_text()
-    lines = [tuple(line.split(" | ")) for line in input_raw.split("\n")]
+def preprocess_input(input_text: str):
+    return [tuple(line.split(" | ")) for line in input_text.split("\n")]
 
-    # Part 1
-    # Count all the "words" in all output values that have length 2, 3, 4 or 7.
+
+def first(input) -> int:
     total = 0
-    for unique_signal, output_value in lines:
+    for unique_signal, output_value in input:
         digits = output_value.split(" ")
         for digit in digits:
             if len(digit) in [2, 3, 4, 7]:
                 total += 1
+    return total
 
-    print("Answer part 1:", total)
 
-    # Part 2
-    # Translate all the output values and sum them.
-    # 1010934 too low.
-
+def second(input) -> int:
     total = 0
-    for i, (unique_signal, output_value) in enumerate(lines):
+    for i, (unique_signal, output_value) in enumerate(input):
         # output += Thingy(unique_signal).translate(output_value)
         thingy = Thingy(unique_signal)
         output = thingy.translate(output_value)
-        print(output)
         total += output
-
-    # Debug: check that 200 lines have been parsed.
-    assert i + 1 == 200
-    print("Answer part 2:", total)
+    return total
 
 
 if __name__ == "__main__":
-    main()
+    original_input = load_input_data(file.parent / "input.txt", day=8, year=2021)
+    preprocessed_input = preprocess_input(original_input)
+    print("The answer to part 1 is:", first(preprocessed_input))
+    print("The answer to part 2 is:", second(preprocessed_input))
