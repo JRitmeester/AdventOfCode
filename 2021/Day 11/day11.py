@@ -1,8 +1,20 @@
-import numpy as np
+import sys
 from pathlib import Path
-import matplotlib.pyplot as plt
 from pprint import pprint
+
 import imageio.v2 as imageio
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Add the repository root the sys.path in order to import the helper modules.
+file = Path(__file__)
+REPO_ROOT = next(
+    (parent for parent in file.parents if parent.name.lower() == "advent of code"),
+    None,
+)
+sys.path.append(REPO_ROOT.as_posix())
+
+from aoc_util.helpers import load_input_data
 
 # Is it octopi, octopuses or something else? In this house, it is octos.
 # There is a GIF export in here, but I'm not entirely sure the result is correct.
@@ -25,7 +37,7 @@ def step(octos):
     octos += 1
 
     # Keep track of octos that have already flashed.
-    has_flashed = np.zeros_like(octos, dtype=np.bool)
+    has_flashed = np.zeros_like(octos, dtype=bool)
 
     # Find the positions of octos with a charge above 9.
     charged_octos = list(zip(*np.nonzero(octos > 9)))
@@ -52,27 +64,22 @@ def step(octos):
     return octos, flashes
 
 
-def get_octos(input_raw):
+def preprocess_input(input_text: str):
     return np.array(
-        [[int(energy) for energy in line] for line in input_raw.split("\n")]
+        [[int(energy) for energy in line] for line in input_text.split("\n")]
     )
 
 
-def main():
-    cwd = Path(__file__).parent
-    input_raw = (cwd / "input.txt").read_text()
-    octos = get_octos(input_raw)
-
-    # Part 1
-    # Set up extra stuff to export the images to make a GIF from it.
-    # It looks pretty cool! (Takes a little while though).
+def first(input, make_gif: bool = False) -> int:
     make_gif = False
-    folder = cwd / "images_part_1"
+
+    folder = Path(__file__).parent / "images_part_1"
     if make_gif:
         folder.mkdir(exist_ok=True)
         save_image(octos, folder, "0.png")
 
     # Start simulating the flashes for 100 steps.
+    octos = input
     total = 0
     for i in range(100):
         octos, flashes = step(octos)
@@ -80,19 +87,17 @@ def main():
             save_image(octos, folder, f"{i+1}.png")
         total += flashes
 
-    print("Answer part 1:", total)
-
     if make_gif:
         create_gif(folder, "part1.gif")
 
-    # Part 2
+    return total
 
-    # Reset the octos (you could continue from step 100 but that just
-    # get confusing to me...
-    octos = get_octos(input_raw)
+
+def second(input, make_gif: bool = False) -> int:
+    octos = input
 
     make_gif = True
-    folder = cwd / "images_part_2"
+    folder = Path(__file__).parent / "images_part_2"
     if make_gif:
         folder.mkdir(exist_ok=True)
         save_image(octos, folder, "0.png")
@@ -108,9 +113,13 @@ def main():
         if np.sum(octos) == 0:
             break
 
-    print("Answer part 2:", steps)
     create_gif(folder, "part2.gif")
+    # Test ran fine with returned value, but puzzle need another +1.
+    return steps
 
 
 if __name__ == "__main__":
-    main()
+    original_input = load_input_data(file.parent / "input.txt", day=11, year=2021)
+    preprocessed_input = preprocess_input(original_input)
+    print("The answer to part 1 is:", first(preprocessed_input, make_gif=False))
+    print("The answer to part 2 is:", second(preprocessed_input, make_gif=False))
