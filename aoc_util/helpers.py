@@ -1,9 +1,9 @@
-from pathlib import Path
-from functools import wraps
 import time
-from aocd import get_data
+from functools import wraps
+from pathlib import Path
 
 import numpy as np
+from aocd import get_data
 
 
 def print_timing(func: callable) -> callable:
@@ -24,18 +24,16 @@ def print_timing(func: callable) -> callable:
 
 
 def load_input_data(
-    input_file: Path, day: int, year: int, split_by=None
+    input_file: Path, day: int, year: int, store_data: bool = True
 ) -> str | list[str]:
     if not input_file.exists():
         data = get_data(day=day, year=year)
-        input_file.write_text(data)
+        if store_data:
+            input_file.write_text(data)
     else:
         data = input_file.read_text()
 
-    if split_by:
-        return data.split(split_by)
-    else:
-        return data
+    return data
 
 
 def input_to_np_arr(input: str, dtype=None) -> np.ndarray:
