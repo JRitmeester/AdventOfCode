@@ -25,13 +25,13 @@ def preprocessed_input():
 
 
 def test_first(preprocessed_input):
-    result = day.first(*preprocessed_input)
-    assert result == None
+    result = day.first(preprocessed_input)
+    assert False
 
 
 def test_second(preprocessed_input):
-    result = day.second(*preprocessed_input)
-    assert result == None
+    result = day.second(preprocessed_input)
+    assert False
 
 
 if __name__ == "__main__":
