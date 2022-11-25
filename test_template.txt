@@ -25,13 +25,13 @@ def input_text():
 
 
 def test_first(input_text):
-    result = day.first(input_text)
-    assert False
+    result = day.first(*input_text)
+    assert result == None
 
 
 def test_second(input_text):
-    result = day.second(input_text)
-    assert False
+    result = day.second(*input_text)
+    assert result == None
 
 
 if __name__ == "__main__":
