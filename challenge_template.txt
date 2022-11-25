@@ -10,7 +10,7 @@ REPO_ROOT = next(
 )
 sys.path.append(REPO_ROOT.as_posix())
 
-from aoc_util.helpers import input_to_np_arr, load_input_data
+from aoc_util.helpers import load_input_data
 
 
 def preprocess_input(input_text: str):
@@ -27,6 +27,6 @@ def second(input) -> int:
 
 if __name__ == "__main__":
     original_input = load_input_data(file.parent / "input.txt", day=1, year=2021)
-    input_ = preprocess_input(original_input)
-    print("The answer to part 1 is:", first(input_))
-    print("The answer to part 2 is:", second(input_))
+    preprocessed_input = preprocess_input(original_input)
+    print("The answer to part 1 is:", first(preprocessed_input))
+    print("The answer to part 2 is:", second(preprocessed_input))

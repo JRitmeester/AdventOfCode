@@ -17,20 +17,20 @@ from aoc_util.helpers import load_input_data
 
 
 @pytest.fixture
-def input_text():
+def preprocessed_input():
     input = load_input_data(
         file.parent / "example_input.txt", day={1}, year={2}
     )
     return day.preprocess_input(input)
 
 
-def test_first(input_text):
-    result = day.first(*input_text)
+def test_first(preprocessed_input):
+    result = day.first(*preprocessed_input)
     assert result == None
 
 
-def test_second(input_text):
-    result = day.second(*input_text)
+def test_second(preprocessed_input):
+    result = day.second(*preprocessed_input)
     assert result == None
 
 
