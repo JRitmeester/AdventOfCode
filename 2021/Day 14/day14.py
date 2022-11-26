@@ -1,7 +1,17 @@
-import numpy as np
+import sys
 from pathlib import Path
-import matplotlib.pyplot as plt
-from pprint import pprint
+
+import numpy as np
+
+# Add the repository root the sys.path in order to import the helper modules.
+file = Path(__file__)
+REPO_ROOT = next(
+    (parent for parent in file.parents if parent.name.lower() == "advent of code"),
+    None,
+)
+sys.path.append(REPO_ROOT.as_posix())
+
+from aoc_util.helpers import load_input_data
 
 
 def insert_char(base, insertion, i):
@@ -57,15 +67,14 @@ def get_pair_counts(template):
     return pair_counts
 
 
-def get_template_and_rules():
-    input_raw = (Path(__file__).parent / "input.txt").read_text()
-    template, rules = input_raw.split("\n\n")
+def preprocess_input(input_text: str) -> tuple[str, list[str]]:
+    template, rules = input_text.split("\n\n")
     rules = rules.split("\n")
     return template, rules
 
 
-def main():
-    template, rules = get_template_and_rules()
+def first(input) -> int:
+    template, rules = input
     manual = dict([tuple(rule.split(" -> ")) for rule in rules])
 
     # Part 1
@@ -75,13 +84,12 @@ def main():
 
     # Count the occurrences of each letter.
     char_counts = {char: template.count(char) for char in set(template)}
-    print("Answer part 1:", max(char_counts.values()) - min(char_counts.values()))
+    return max(char_counts.values()) - min(char_counts.values())
 
-    # Part 2
-    # The better approach: Count the pairs, and calculate the new pairs based on the new insertions.
 
-    # Reset the template polymer.
-    template = get_template_and_rules()[0]
+def second(input) -> int:
+    template, rules = input
+    manual = dict([tuple(rule.split(" -> ")) for rule in rules])
 
     # Count the pairs in the beginning.
     pair_counts = get_pair_counts(template)
@@ -98,8 +106,11 @@ def main():
         for element, count in new_element_count.items():
             element_count[element] = element_count.get(element, 0) + count
 
-    print("Answer part 2:", max(element_count.values()) - min(element_count.values()))
+    return max(element_count.values()) - min(element_count.values())
 
 
 if __name__ == "__main__":
-    main()
+    original_input = load_input_data(file.parent / "input.txt", day=14, year=2021)
+    preprocessed_input = preprocess_input(original_input)
+    print("The answer to part 1 is:", first(preprocessed_input))
+    print("The answer to part 2 is:", second(preprocessed_input))
