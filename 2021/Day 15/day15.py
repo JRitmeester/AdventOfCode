@@ -1,7 +1,18 @@
 import heapq
+import sys
 from pathlib import Path
-from pprint import pprint
+
 import numpy as np
+
+# Add the repository root the sys.path in order to import the helper modules.
+file = Path(__file__)
+REPO_ROOT = next(
+    (parent for parent in file.parents if parent.name.lower() == "advent of code"),
+    None,
+)
+sys.path.append(REPO_ROOT.as_posix())
+
+from aoc_util.helpers import load_input_data
 
 
 def dijkstra(cave):
@@ -19,7 +30,7 @@ def dijkstra(cave):
         cost, x, y = heapq.heappop(heap)
 
         if (x, y) == (h - 1, w - 1):
-            return cost
+            return int(cost)
 
         neighbors = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
         for nx, ny in neighbors:
@@ -51,13 +62,20 @@ def expand_cave(cave):
     return expanded
 
 
-def main():
-    input_raw = (Path(__file__).parent / "input.txt").read_text()
-    cave = np.array([list(map(int, line)) for line in input_raw.split("\n")])
+def preprocess_input(input_text: str):
+    return np.array([list(map(int, line)) for line in input_text.split("\n")])
 
-    print("Answer part 1:", dijkstra(cave))
-    print("Answer part 2:", dijkstra(expand_cave(cave)))
+
+def first(input) -> int:
+    return dijkstra(input)
+
+
+def second(input) -> int:
+    return dijkstra(expand_cave(input))
 
 
 if __name__ == "__main__":
-    main()
+    original_input = load_input_data(file.parent / "input.txt", day=15, year=2021)
+    preprocessed_input = preprocess_input(original_input)
+    print("The answer to part 1 is:", first(preprocessed_input))
+    print("The answer to part 2 is:", second(preprocessed_input))
