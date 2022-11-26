@@ -1,14 +1,24 @@
-"""
-All credits to Github user Rtchaik (https://github.com/Rtchaik/AoC-2021) for this solution.
-I have changed it to learn from it by decomposing and restructuring the functions.
-"""
-
+import sys
 from collections import defaultdict
 from pathlib import Path
 
+import numpy as np
 
-def find_number_of_routes(connections, path):
+# Add the repository root the sys.path in order to import the helper modules.
+file = Path(__file__)
+REPO_ROOT = next(
+    (parent for parent in file.parents if parent.name.lower() == "advent of code"),
+    None,
+)
+sys.path.append(REPO_ROOT.as_posix())
 
+from aoc_util.helpers import load_input_data
+
+
+def find_number_of_routes(connections, path=None) -> int:
+
+    if not path:
+        path = ["start"]
     total = 0
 
     # Check the cave that was added last, and explore its connections.
@@ -28,7 +38,9 @@ def find_number_of_routes(connections, path):
     return total
 
 
-def find_number_of_routes2(connections, path):
+def find_number_of_routes2(connections, path=None):
+    if not path:
+        path = ["start"]
     total = 0
     for cave in connections[path[-1]]:
         if cave == "end":
@@ -42,11 +54,10 @@ def find_number_of_routes2(connections, path):
     return total
 
 
-def main():
-    input_raw = (Path(__file__).parent / "input.txt").read_text()
+def preprocess_input(input_text: str):
     connections = defaultdict(list)
 
-    for line in input_raw.split("\n"):
+    for line in input_text.split("\n"):
         pair = line.split("-")
 
         # Add a two-way connection between cave a and b,
@@ -54,10 +65,19 @@ def main():
         for a, b in zip(pair, reversed(pair)):
             if b != "start":
                 connections[a].append(b)
+    return connections
 
-    print("Answer part 1: ", find_number_of_routes(connections, ["start"]))
-    print("Answer part 2: ", find_number_of_routes2(connections, ["start"]))
+
+def first(input) -> int:
+    return find_number_of_routes(input)
+
+
+def second(input) -> int:
+    return find_number_of_routes2(input)
 
 
 if __name__ == "__main__":
-    main()
+    original_input = load_input_data(file.parent / "input.txt", day=12, year=2021)
+    preprocessed_input = preprocess_input(original_input)
+    print("The answer to part 1 is:", first(preprocessed_input))
+    print("The answer to part 2 is:", second(preprocessed_input))
