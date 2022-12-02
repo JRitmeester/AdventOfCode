@@ -21,12 +21,12 @@ def preprocess_input(input_text: str):
 
 
 @print_timing
-def first(calories_per_elf: list[int]) -> int:
+def first(input_data) -> int:
     pass
 
 
 @print_timing
-def second(calories_per_elf: list[int]) -> int:
+def second(input_data) -> int:
     pass
 
 if __name__ == "__main__":
