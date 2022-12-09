@@ -19,9 +19,8 @@ def preprocess_input(input_text: str, size=(99, 99)):
         [int(n) for line in "".join(input_text.split("\n")) for n in line]
     ).reshape(size)
 
+
 def get_visible_trees(trees):
-
-
     def get_visible_trees_from_direction(
         trees: np.ndarray, rot90_n_times: int
     ) -> np.ndarray:
@@ -46,35 +45,38 @@ def get_visible_trees(trees):
         )
 
         return visible_trees
-    
-    visible_trees = sum(get_visible_trees_from_direction(trees, rot90_n_times=i) for i in range(4)) > 0
+
+    visible_trees = (
+        sum(get_visible_trees_from_direction(trees, rot90_n_times=i) for i in range(4))
+        > 0
+    )
     return visible_trees
 
+
 def get_scenic_score(trees, x, y):
-    north_view = trees[:y, x][::-1]
-    east_view = trees[y, x + 1 :]
-    south_view = trees[y + 1 :, x]
-    west_view = trees[y, :x][::-1]
-    
-    hut_height = trees[y,x]
+    north_view = trees[:y, x][::-1]  # All trees from the hut to the northern edge
+    east_view = trees[y, x + 1 :]  # All trees from the hut to the eastern edge
+    south_view = trees[y + 1 :, x]  # All trees from the hut to the southern edge
+    west_view = trees[y, :x][::-1]  # All trees from the hut to the western edge
+
+    hut_height = trees[y, x]
     trees_per_dir = []
-    
+
     for view_dir in [north_view, east_view, south_view, west_view]:
-        if view_dir.size == 0:  # If you're on the edge of the forest.
-            n_visible_trees = 0
-            continue
-        
+        if view_dir.size == 0:  # If you're on the edge of the forest, append a zero.
+            trees_per_dir.append(0)
+
         # Find how many trees it takes before one blocks your view (including that tree)
-        height_diff = view_dir - hut_height
-        for i, diff in enumerate(height_diff,1):
-            if diff >= 0:
-                trees_per_dir.append(i)
+        height_diff = view_dir - hut_height  # How much higher are the trees compared to the hut.
+        for i, diff in enumerate(height_diff):
+            if diff >= 0:  # If the tree is at least as high as the hut, store the value and stop.
+                trees_per_dir.append(i + 1)  # Add one to include the blocking tree.
                 break
         else:
-            trees_per_dir.append(len(view_dir))
+            trees_per_dir.append(len(view_dir))  # If no blocking tree is found, add all trees.
 
-    return np.prod(trees_per_dir)
-    
+    return np.prod(trees_per_dir)  # Calculate the product of all directions
+
 
 @print_timing
 def first(trees) -> int:
