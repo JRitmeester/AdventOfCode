@@ -52,12 +52,14 @@ def _init_challenges(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-
+    today = datetime.datetime.now()
     parser.add_argument(
         "generate",
         type=str,
         choices=["all", "challenges", "tests"],
         help="What files should be generated from the template.",
+        nargs="?",
+        default="all",
     )
 
     parser.add_argument(
@@ -66,12 +68,16 @@ if __name__ == "__main__":
         choices=range(0, 26),
         metavar="<0-25>",
         help="Specify date for which to generate the challenge (1-25), or 0 for all dates of a year.",
+        nargs="?",
+        default=today.day,
     )
 
     parser.add_argument(
         "year",
         type=int,
         help="Specify the year (starting at 2015) for which to generate the challenge(s).",
+        nargs="?",
+        default=today.year,
     )
 
     parser.add_argument(
