@@ -1,31 +1,19 @@
-import sys
-from pathlib import Path
+from pathlib import Path; file = Path(__file__); import sys; sys.path.append(file.parents[2].as_posix())  # fmt: skip
+from aoc_util.helpers import load_input_data
 
 import numpy as np
 import pandas as pd
+import re
+import matplotlib.pyplot as plt
 
-# Add the repository root the sys.path in order to import the helper modules.
-file = Path(__file__)
-REPO_ROOT = next(
-    (parent for parent in file.parents if parent.name.lower() == "advent of code"),
-    None,
-)
-sys.path.append(REPO_ROOT.as_posix())
-
-from aoc_util.helpers import load_input_data, print_timing
-
-
-@print_timing
 def preprocess_input(input_text: str):
     pass
 
 
-@print_timing
 def first(input_data) -> int:
     pass
 
 
-@print_timing
 def second(input_data) -> int:
     pass
 
