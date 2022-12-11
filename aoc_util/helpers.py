@@ -37,7 +37,7 @@ def print_timing(func: callable) -> callable:
         start = time.perf_counter()
         result = func(*arg)
         end = time.perf_counter()
-        print(f"{func.__name__} took {(end - start) * 1000:.8f} seconds")
+        print(f"{func.__name__} took {(end - start):.8f} seconds")
         return result
 
     return wrapper
