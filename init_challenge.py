@@ -3,7 +3,7 @@
 import argparse
 import datetime
 from pathlib import Path
-
+import os
 from aoc_util.helpers import assert_session_id, load_input_data
 
 
@@ -53,6 +53,13 @@ def _init_challenges(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     today = datetime.datetime.now()
+
+    session_id_path = Path.cwd() / '.session_id'
+    if session_id_path.exists():
+        SESSION_ID = session_id_path.read_text()
+        # Export SESSION_ID to environment variable
+        os.environ["AOC_SESSION"] = SESSION_ID
+
     parser.add_argument(
         "generate",
         type=str,
