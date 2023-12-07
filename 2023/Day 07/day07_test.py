@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from pprint import pprint
 
 # Add the repository root the sys.path in order to import the helper modules.
 file = Path(__file__)
@@ -23,18 +24,24 @@ def preprocessed_input():
     )
     return day.preprocess_input(input)
 
-def test_sort_hands(preprocessed_input):
-    sorted_hands = sorted(preprocessed_input)
-    assert [str(x) for x in sorted_hands] == ['32T3K', 'KTJJT', 'KK677', 'T55J5', 'QQQJA', 'AAAKK']
+def test_sort_hands_old(preprocessed_input):
+    hands = day.create_hands(preprocessed_input, new_rules=False)
+    sorted_hands = sorted(hands)
+    assert [str(x) for x in sorted_hands] == ['32T3K', 'KTJJT', 'KK677', 'T55J5', 'QQQJA']
+
+def test_sort_hands_new(preprocessed_input):
+    hands = day.create_hands(preprocessed_input, new_rules=True)
+    sorted_hands = sorted(hands)
+    assert [str(x) for x in sorted_hands] == ['32T3K', 'KK677', 'T55J5', 'QQQJA', 'KTJJT']
 
 def test_first(preprocessed_input):
     result = day.first(preprocessed_input)
-    assert result == 6440 + 600
+    assert result == 6440
 
 
 def test_second(preprocessed_input):
     result = day.second(preprocessed_input)
-    assert result == None
+    assert result == 5905
 
 
 if __name__ == "__main__":
