@@ -5,7 +5,7 @@ import datetime
 from pathlib import Path
 import os
 from aoc_util.helpers import assert_session_id, load_input_data
-
+import webbrowser
 
 def _init_challenges(
     days: list[int],
@@ -13,6 +13,7 @@ def _init_challenges(
     generate_challenges: bool,
     generate_tests: bool,
     overwrite: bool,
+    open_challenge_page: bool
 ) -> None:
     year_folder = Path.cwd() / str(year)
     year_folder.mkdir(exist_ok=True)
@@ -48,17 +49,14 @@ def _init_challenges(
                     test_file.write_text(
                         test_template.format(day_number_fmt.lower(), day_number, year)
                     )
+        if open_challenge_page:
+            webbrowser.open(f"https://adventofcode.com/{year}/day/{day_number}")
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     today = datetime.datetime.now()
-
-    session_id_path = Path.cwd() / '.session_id'
-    if session_id_path.exists():
-        SESSION_ID = session_id_path.read_text()
-        # Export SESSION_ID to environment variable
-        os.environ["AOC_SESSION"] = SESSION_ID
 
     parser.add_argument(
         "generate",
@@ -93,13 +91,28 @@ if __name__ == "__main__":
         help="Overwrite the existing files for all specified challenges.",
     )
 
+    parser.add_argument(
+        "--silent",
+        action="store_false",
+        help="Prevent the daily challenge from opening in the web browser.",
+        default=True
+    )
+
     args = vars(parser.parse_args())
     generate, days, year = args["generate"], args["days"], args["year"]
 
     generate_challenges = generate in ["challenges", "all"]
     generate_tests = generate in ["tests", "all"]
     overwrite = args["overwrite"]
+    open_challenge_page = args['silent']
 
+    session_id_path = Path.cwd() / '.session_id'
+    if session_id_path.exists():
+        SESSION_ID = session_id_path.read_text()
+        # Export SESSION_ID to environment variable
+        os.environ["AOC_SESSION"] = SESSION_ID
+
+    
     if 2015 <= year <= datetime.datetime.now().year:
         if 0 <= days <= 25:
             _init_challenges(
@@ -108,6 +121,7 @@ if __name__ == "__main__":
                 generate_challenges=generate_challenges,
                 generate_tests=generate_tests,
                 overwrite=overwrite,
+                open_challenge_page=open_challenge_page
             )
         else:
             parser.error(
