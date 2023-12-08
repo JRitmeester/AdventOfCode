@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3                # clones your repo
 
-      - uses: joblo2213/aoc-badges-action@v3
+      - uses: joblo2213/aoc-badges-action@v4
         with:
           userid: ${{ secrets.AOC_USER_ID }}                          # your user id, see setup on how to obtain
           session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
@@ -28,7 +28,7 @@ jobs:
 #         dayRegex: '(?<=https:\/\/img\.shields\.io\/badge\/day%20📅-)[0-9]+(?=-blue)'                   # Regular expression that finds the content of the day badge in your file.
 #         daysCompletedRegex: '(?<=https:\/\/img\.shields\.io\/badge\/days%20completed-)[0-9]+(?=-red)'  # Regular expression that finds the content of the days completed badge in your file.
 
-      - uses: joblo2213/aoc-badges-action@v3
+      - uses: joblo2213/aoc-badges-action@v4
         with:
           userid: ${{ secrets.AOC_USER_ID }}                          # your user id, see setup on how to obtain
           session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
@@ -37,7 +37,7 @@ jobs:
           year: 2020                                                                                   # The year for which stats should be retrieved
           starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Stars%202020%20⭐-)[0-9]+(?=-yellow)'      # Regular expression that finds the content of the stars badge in your file.
           
-      - uses: joblo2213/aoc-badges-action@v3
+      - uses: joblo2213/aoc-badges-action@v4
         with:
           userid: ${{ secrets.AOC_USER_ID }}                          # your user id, see setup on how to obtain
           session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
@@ -46,7 +46,7 @@ jobs:
           year: 2021                                                                                  # The year for which stats should be retrieved
           starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Stars%202021%20⭐-)[0-9]+(?=-yellow)'      # Regular expression that finds the content of the stars badge in your file.
           
-      - uses: joblo2213/aoc-badges-action@v3
+      - uses: joblo2213/aoc-badges-action@v4
         with:
           userid: ${{ secrets.AOC_USER_ID }}                          # your user id, see setup on how to obtain
           session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
@@ -55,7 +55,7 @@ jobs:
           year: 2022                                                                                   # The year for which stats should be retrieved
           starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Stars%202022%20⭐-)[0-9]+(?=-yellow)'      # Regular expression that finds the content of the stars badge in your file.
 
-      - uses: joblo2213/aoc-badges-action@v3
+      - uses: joblo2213/aoc-badges-action@v4
         with:
           userid: ${{ secrets.AOC_USER_ID }}                          # your user id, see setup on how to obtain
           session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
