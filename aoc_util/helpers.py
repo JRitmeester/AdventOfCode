@@ -6,6 +6,10 @@ from pathlib import Path
 import numpy as np
 from aocd import get_data
 
+DIRS = {"up": np.array((0, -1)),
+        "right": np.array([1, 0]),
+        "down": np.array([0, 1]),
+        "left": np.array([-1, 0])}
 
 def assert_session_id() -> bool:
     """
@@ -56,8 +60,6 @@ def load_input_data(
     return data
 
 
-def input_to_np_arr(input: str, dtype=None) -> np.ndarray:
-    arr = np.array(input)
-    if dtype:
-        arr = arr.astype(dtype)
-    return arr
+def create_numpy_grid(multiline_string: str) -> np.ndarray:
+    grid = np.array([list(line) for line in multiline_string.split('\n')])
+    return grid
