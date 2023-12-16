@@ -6,10 +6,12 @@ from pathlib import Path
 import numpy as np
 from aocd import get_data
 
-DIRS = {"up": np.array((0, -1)),
-        "right": np.array([1, 0]),
-        "down": np.array([0, 1]),
-        "left": np.array([-1, 0])}
+DIRS = {
+        "up": np.array((-1, 0)),
+        "right": np.array([0, 1]),
+        "down": np.array([1, 0]),
+        "left": np.array([0, -1])
+        }
 
 def assert_session_id() -> bool:
     """
