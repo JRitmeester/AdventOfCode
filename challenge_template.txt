@@ -1,10 +1,7 @@
 from pathlib import Path; file = Path(__file__); import sys; sys.path.append(file.parents[2].as_posix())  # fmt: skip
-from aoc_util.helpers import load_input_data
-
+from aoc_util.helpers import *
 import numpy as np
-import pandas as pd
 import re
-import matplotlib.pyplot as plt
 
 def preprocess_input(input_text: str):
     pass
