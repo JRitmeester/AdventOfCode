@@ -2,6 +2,7 @@ from pathlib import Path; file = Path(__file__); import sys; sys.path.append(fil
 from aoc_util.helpers import *
 import numpy as np
 import re
+from pprint import pprint
 
 def preprocess_input(input_text: str):
     pass
@@ -15,7 +16,7 @@ def second(input_data) -> int:
     pass
 
 if __name__ == "__main__":
-    original_input = load_input_data(file.parent / "input.txt", day={}, year={})
+    original_input = load_input_data(file.parent / "example_input.txt", day={}, year={})
     preprocessed_input = preprocess_input(original_input)
     print("The answer to part 1 is:", first(preprocessed_input))
     print("The answer to part 2 is:", second(preprocessed_input))
