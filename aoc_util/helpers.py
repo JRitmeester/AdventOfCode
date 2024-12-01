@@ -7,11 +7,12 @@ import numpy as np
 from aocd import get_data
 
 DIRS = {
-        "up": np.array((-1, 0)),
-        "right": np.array([0, 1]),
-        "down": np.array([1, 0]),
-        "left": np.array([0, -1])
-        }
+    "up": np.array((-1, 0)),
+    "right": np.array([0, 1]),
+    "down": np.array([1, 0]),
+    "left": np.array([0, -1]),
+}
+
 
 def assert_session_id() -> bool:
     """
@@ -63,5 +64,5 @@ def load_input_data(
 
 
 def create_numpy_grid(multiline_string: str) -> np.ndarray:
-    grid = np.array([list(line) for line in multiline_string.split('\n')])
+    grid = np.array([list(line) for line in multiline_string.split("\n")])
     return grid
