@@ -7,13 +7,14 @@ import os
 from aoc_util.helpers import assert_session_id, load_input_data
 import webbrowser
 
+
 def _init_challenges(
     days: list[int],
     year: int,
     generate_challenges: bool,
     generate_tests: bool,
     overwrite: bool,
-    open_challenge_page: bool
+    open_challenge_page: bool,
 ) -> None:
     year_folder = Path.cwd() / str(year)
     year_folder.mkdir(exist_ok=True)
@@ -95,7 +96,7 @@ if __name__ == "__main__":
         "--silent",
         action="store_false",
         help="Prevent the daily challenge from opening in the web browser.",
-        default=True
+        default=True,
     )
 
     args = vars(parser.parse_args())
@@ -104,15 +105,15 @@ if __name__ == "__main__":
     generate_challenges = generate in ["challenges", "all"]
     generate_tests = generate in ["tests", "all"]
     overwrite = args["overwrite"]
-    open_challenge_page = args['silent']
+    open_challenge_page = args["silent"]
 
-    session_id_path = Path.cwd() / '.session_id'
+    session_id_path = Path.cwd() / ".session_id"
     if session_id_path.exists():
-        SESSION_ID = session_id_path.read_text()
+        os.environ["AOCD_DIR"] = session_id_path.as_posix()
         # Export SESSION_ID to environment variable
+        SESSION_ID = session_id_path.read_text()
         os.environ["AOC_SESSION"] = SESSION_ID
 
-    
     if 2015 <= year <= datetime.datetime.now().year:
         if 0 <= days <= 25:
             _init_challenges(
@@ -121,7 +122,7 @@ if __name__ == "__main__":
                 generate_challenges=generate_challenges,
                 generate_tests=generate_tests,
                 overwrite=overwrite,
-                open_challenge_page=open_challenge_page
+                open_challenge_page=open_challenge_page,
             )
         else:
             parser.error(
