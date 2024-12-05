@@ -16,23 +16,28 @@ import day{0} as day
 from aoc_util.helpers import load_input_data
 
 
-@pytest.fixture
-def preprocessed_input():
-    input = load_input_data(
-        file.parent / "example_input.txt", day={1}, year={2}
-    )
-    return day.preprocess_input(input)
+@pytest.fixture(
+    params=[("example_input.txt", "first"), ("example_input_2.txt", "second")]
+)
+def preprocessed_input(request):
+    input_file_name, part = request.param
+    if not (file.parent / "example_input_2.txt").exists():
+        input_file_name = "example_input.txt"
+
+    input = load_input_data(file.parent / input_file_name, day=3, year=2024)
+    return day.preprocess_input(input), part
 
 
-def test_first(preprocessed_input):
-    result = day.first(preprocessed_input)
-    assert result == None
 
-
-def test_second(preprocessed_input):
-    result = day.second(preprocessed_input)
-    assert result == None
+def test_solution(preprocessed_input):
+    data, part = preprocessed_input
+    if part == "first":
+        result = day.first(data)
+        assert result == None
+    else:
+        result = day.second(data)
+        assert result == None
 
 
 if __name__ == "__main__":
-    os.system(f'pytest "{{file}}" -s')
+    os.system(f'pytest "{file}" -s')
