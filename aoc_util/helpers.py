@@ -7,7 +7,7 @@ import numpy as np
 from aocd import get_data
 
 DIRS = {
-    "up": np.array((-1, 0)),
+    "up": np.array([-1, 0]),
     "right": np.array([0, 1]),
     "down": np.array([1, 0]),
     "left": np.array([0, -1]),
