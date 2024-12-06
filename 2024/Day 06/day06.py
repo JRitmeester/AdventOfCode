@@ -1,8 +1,6 @@
 from pathlib import Path; file = Path(__file__); import sys; sys.path.append(file.parents[2].as_posix())  # fmt: skip
 from aoc_util.helpers import load_input_data, create_numpy_grid, DIRS, print_timing
 import numpy as np
-import re
-from pprint import pprint
 import multiprocessing
 import matplotlib.pyplot as plt
 
