@@ -24,7 +24,7 @@ def preprocessed_input(request):
     if not (file.parent / "example_input_2.txt").exists():
         input_file_name = "example_input.txt"
 
-    input = load_input_data(file.parent / input_file_name, day=3, year=2024)
+    input = load_input_data(file.parent / input_file_name, day={1}, year={2})
     return day.preprocess_input(input), part
 
 
@@ -40,4 +40,4 @@ def test_solution(preprocessed_input):
 
 
 if __name__ == "__main__":
-    os.system(f'pytest "{file}" -s')
+    os.system(f'pytest "{{file}}" -s')
