@@ -6,6 +6,9 @@ from pprint import pprint
 import multiprocessing
 import matplotlib.pyplot as plt
 
+USE_MULTIPROCESSING = True
+DO_VISUALISATION = False
+
 
 class Guard:
 
@@ -72,7 +75,7 @@ def first(visited_mask: np.ndarray) -> int:
 def detect_loop(args: tuple[np.ndarray, tuple[int, int]]) -> tuple[int, int] | None:
     """Traverse the lab starting at ^ and see if the guard gets stuck in a loop."""
     lab, obstacle_position = args
-    lab_copy = lab.copy()
+    lab_copy = lab.view()
     start_position = np.where(lab_copy == "^")
     start_position = np.array([start_position[0][0], start_position[1][0]])
 
@@ -132,8 +135,6 @@ def second(lab: np.ndarray, visited_mask: np.ndarray) -> int:
 
 
 if __name__ == "__main__":
-    USE_MULTIPROCESSING = True
-    DO_VISUALISATION = False
     original_input = load_input_data(file.parent / "input.txt", day=6, year=2024)
     preprocessed_input = preprocess_input(original_input)
     visited_mask = do_basic_route(preprocessed_input)
