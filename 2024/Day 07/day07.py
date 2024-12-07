@@ -1,7 +1,6 @@
 from pathlib import Path; file = Path(__file__); import sys; sys.path.append(file.parents[2].as_posix())  # fmt: skip
 from aoc_util.helpers import print_timing, load_input_data
 import itertools
-from typing import Callable
 
 EquationList = list[tuple[int, list[int]]]
 
@@ -19,7 +18,7 @@ def concatentate(a: int, b: int) -> int:
 
 
 def calculate_possible_answers(
-    operators: list[Callable], operands: list[int], test_value: int
+    operators: list[callable], operands: list[int], test_value: int
 ) -> list[int]:
     possible_answers = set()
     cache = {}  # (current_total, remaining_operands_index) -> result
