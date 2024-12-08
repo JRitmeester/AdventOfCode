@@ -66,3 +66,16 @@ def load_input_data(
 def create_numpy_grid(multiline_string: str) -> np.ndarray:
     grid = np.array([list(line) for line in multiline_string.split("\n")])
     return grid
+
+
+def get_2d_index(arr: np.ndarray, element: any) -> list[tuple[int, int]]:
+    """Returns a list (y,x) pairs where `element` is found in `grid`.
+
+    Args:
+        grid (np.ndarray): Input array
+        element (any): Element to search for
+
+    Returns:
+        list[tuple[int, int]]: List of 2D indices as [(y,x), ...]
+    """
+    return list(zip(*np.where(arr == element)))
