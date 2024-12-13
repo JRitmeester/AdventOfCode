@@ -5,8 +5,8 @@
 ![](https://img.shields.io/badge/Stars%202020%20⭐-10-yellow)
 ![](https://img.shields.io/badge/Stars%202021%20⭐-33-yellow)
 ![](https://img.shields.io/badge/Stars%202022%20⭐-24-yellow)
-![](https://img.shields.io/badge/Stars%202023%20⭐-33-yellow)
-![](https://img.shields.io/badge/Stars%202024%20⭐-22-yellow)
+![](https://img.shields.io/badge/Stars%202023%20⭐-34-yellow)
+![](https://img.shields.io/badge/Stars%202024%20⭐-24-yellow)
 
 <p>
 Welcome to my Advent of Code repository! I tried to spice this repo up with a bunch of nice-to-haves. Since I started with AOC in 2020, I have haphazardly collected the daily Python files and manually collected the inputs. This had to change! So I incorporated the following features into my workflow:
