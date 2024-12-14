@@ -77,9 +77,8 @@ def second(
     Then I noticed that some intervals seemed to be 101 iterations apart, and some 103, which of course is not coincidence.
     This meant that each occurrence could be expressed as a frequency (101 or 103) and an offset, which is the step number % frequency.
     So I implemented that in the show_robots function, and only had to look at 2% of all iterations, until I found the pattern.
-    Then, importantly, I had to add 100 to my result, because the robots already had moved 100 steps in the first half!
-    It seems the puzzle accounted for this fact, because, since I was offset 100 steps, I should have missed the pattern because the
-    two offset I found by taking the remainder should have also been off by 100.
+    Then, importantly, I had to add 100 to my result, because the robots already had moved 100 steps in the first half! This could have been
+    prevented by reinitialising the robots at the start of the second half, but this works too.
     """
     for i in range(steps):
         for r in robots:
