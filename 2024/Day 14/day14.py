@@ -79,6 +79,7 @@ def second(
     So I implemented that in the show_robots function, and only had to look at 2% of all iterations, until I found the pattern.
     Then, importantly, I had to add 100 to my result, because the robots already had moved 100 steps in the first half! This could have been
     prevented by reinitialising the robots at the start of the second half, but this works too.
+
     """
     for i in range(steps):
         for r in robots:
