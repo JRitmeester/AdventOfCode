@@ -12,3 +12,4 @@ scratchpad.*
 2023/Day 08/ellis.py
 2023/Day 12/day12.py
 **/input.txt
+.pytest_cache
