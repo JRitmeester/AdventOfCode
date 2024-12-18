@@ -1,3 +1,4 @@
+import heapq
 import shutil
 import time
 from functools import wraps
@@ -7,10 +8,10 @@ import numpy as np
 from aocd import get_data
 
 DIRS = {
-    "up": np.array([-1, 0]),
     "right": np.array([0, 1]),
     "down": np.array([1, 0]),
     "left": np.array([0, -1]),
+    "up": np.array([-1, 0]),
 }
 
 
@@ -79,3 +80,61 @@ def get_2d_index(arr: np.ndarray, element: any) -> list[tuple[int, int]]:
         list[tuple[int, int]]: List of 2D indices as [(y,x), ...]
     """
     return list(zip(*np.where(arr == element)))
+
+
+def manhattan_distance(pos1, pos2):
+    return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
+
+
+def a_star(grid: np.ndarray, start: tuple, end: tuple) -> tuple[int, list]:
+    """A* pathfinding algorithm to find shortest path between start and end positions.
+
+    Args:
+        grid: numpy array where 0 is path and 1 is wall
+        start: (y,x) starting coordinates
+        end: (y,x) ending coordinates
+
+    Returns:
+        Tuple of (best path score, list of coordinates for best path)
+    """
+    rows, cols = grid.shape
+    directions = DIRS.values()  # right, down, left, up
+
+    # Priority queue storing: (f_score, position, path_so_far)
+    # f_score = g_score (distance from start) + h_score (estimated distance to end)
+    open_set = [(manhattan_distance(start, end), start, [start])]
+
+    # Track g_scores (actual distance from start to each position)
+    g_scores = {start: 0}
+
+    while open_set:
+        _, current_pos, current_path = heapq.heappop(open_set)
+
+        if current_pos == end:
+            return g_scores[current_pos], current_path
+
+        for dy, dx in directions:
+            next_y, next_x = current_pos[0] + dy, current_pos[1] + dx
+            next_pos = (next_y, next_x)
+
+            # Check bounds and walls
+            if (
+                next_y < 0
+                or next_y >= rows
+                or next_x < 0
+                or next_x >= cols
+                or grid[next_y, next_x] == 1
+            ):
+                continue
+
+            # Calculate new g_score for this neighbor
+            tentative_g_score = g_scores[current_pos] + 1
+
+            # Only proceed if this path to neighbor is better than any previous one
+            if next_pos not in g_scores or tentative_g_score < g_scores[next_pos]:
+                g_scores[next_pos] = tentative_g_score
+                f_score = tentative_g_score + manhattan_distance(next_pos, end)
+                new_path = current_path + [next_pos]
+                heapq.heappush(open_set, (f_score, next_pos, new_path))
+
+    return float("inf"), []  # No path found
