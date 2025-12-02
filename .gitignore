@@ -13,3 +13,4 @@ scratchpad.*
 2023/Day 12/day12.py
 **/input.txt
 .pytest_cache
+.python-version
