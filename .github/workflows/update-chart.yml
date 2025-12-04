@@ -57,9 +57,25 @@ jobs:
           
           # Generate horizontal bars
           for year, stars in star_data:
-              # Calculate bar length proportional to max stars
-              bar_length = int((stars / max_stars) * bar_width) if max_stars > 0 else 0
-              bar = "⭐" * bar_length
+              # Calculate scaled bar length proportional to max stars
+              scaled_length = int((stars / max_stars) * bar_width) if max_stars > 0 else 0
+              
+              # Use 🌟 for every 2 stars, ⭐ for remainder (based on actual star count)
+              # If stars is odd, ensure at least 1 ⭐ appears in the scaled bar
+              if stars % 2 == 1:  # Odd number of stars
+                  # For odd: scaled_length should end with ⭐
+                  if scaled_length > 0:
+                      num_glowing = (scaled_length - 1) // 2
+                      num_regular = 1
+                  else:
+                      num_glowing = 0
+                      num_regular = 0
+              else:  # Even number of stars
+                  # For even: only 🌟, no ⭐
+                  num_glowing = scaled_length // 2
+                  num_regular = 0
+              
+              bar = "🌟" * num_glowing + "⭐" * num_regular
               # Format: "YYYY: [bar] stars"
               chart_lines.append(f"{year}: {bar} {stars}")
           
