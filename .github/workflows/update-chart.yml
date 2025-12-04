@@ -1,0 +1,145 @@
+name: Update Star Chart
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+  workflow_dispatch:
+  schedule:
+    # Run daily at midnight UTC
+    - cron: '0 0 * * *'
+
+jobs:
+  update-chart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Generate and update bar chart
+        run: |
+          python << 'EOF'
+          import re
+          from pathlib import Path
+
+          # Read README
+          readme_path = Path('README.md')
+          readme_content = readme_path.read_text()
+
+          # Extract star counts from badges
+          # Pattern matches: Stars%20YYYY%20⭐-XX-yellow in markdown image URLs
+          pattern = r'Stars%20(\d{4})%20⭐-(\d+)-yellow'
+          matches = re.findall(pattern, readme_content)
+
+          if not matches:
+              print("No star badges found in README")
+              exit(1)
+
+          # Sort by year
+          star_data = sorted([(int(year), int(stars)) for year, stars in matches])
+
+          # Find max stars for scaling
+          max_stars = max(stars for _, stars in star_data) if star_data else 1
+          chart_height = 20  # Maximum bar height in characters
+          max_chart_width = 130  # Maximum total chart width in characters
+          
+          # Calculate column width dynamically to fit within max width
+          num_years = len(star_data)
+          # Ensure at least 4 chars per column (to fit year), but scale to fit max width
+          col_width = max(4, max_chart_width // num_years)
+          total_width = num_years * col_width
+          
+          # If still too wide, reduce column width
+          if total_width > max_chart_width:
+              col_width = max_chart_width // num_years
+              total_width = num_years * col_width
+
+          # Generate vertical bar chart
+          chart_lines = []
+          chart_lines.append("### Star Progress Chart")
+          chart_lines.append("")
+          chart_lines.append("```")
+          
+          # Calculate bar heights
+          bar_heights = []
+          for year, stars in star_data:
+              height = int((stars / max_stars) * chart_height) if max_stars > 0 else 0
+              bar_heights.append((year, stars, height))
+          
+          # Build chart rows from top to bottom
+          # Bars should align at bottom (row 0), so we check if current row is within the bar height
+          for row in range(chart_height, -1, -1):
+              row_parts = []
+              for year, stars, height in bar_heights:
+                  # Bar starts at bottom (row 0) and goes up to height
+                  if row < height:
+                      row_parts.append("⭐".center(col_width))
+                  else:
+                      row_parts.append(" ".center(col_width))
+              chart_lines.append("".join(row_parts).rstrip())
+          
+          # Add separator line
+          chart_lines.append("-" * min(total_width, max_chart_width))
+          
+          # Add value labels
+          value_row = []
+          for year, stars, height in bar_heights:
+              value_row.append(str(stars).center(col_width))
+          chart_lines.append("".join(value_row).rstrip())
+          
+          # Add year labels at bottom
+          year_row = []
+          for year, stars, height in bar_heights:
+              year_row.append(str(year).center(col_width))
+          chart_lines.append("".join(year_row).rstrip())
+          
+          chart_lines.append("```")
+          chart_lines.append("")
+
+          chart_text = '\n'.join(chart_lines)
+
+          # Check if chart section already exists
+          chart_marker = "### Star Progress Chart"
+          
+          if chart_marker in readme_content:
+              # Replace existing chart section
+              # Match from chart marker to end of code block (including newlines)
+              pattern = rf'{re.escape(chart_marker)}.*?```\s*\n'
+              readme_content = re.sub(
+                  pattern,
+                  chart_text + '\n',
+                  readme_content,
+                  flags=re.DOTALL
+              )
+          else:
+              # Insert chart after badges
+              lines = readme_content.split('\n')
+              # Find the line after the last badge
+              insert_pos = 0
+              for i, line in enumerate(lines):
+                  if 'Stars%20' in line and 'yellow' in line:
+                      insert_pos = i + 1
+              
+              # Insert chart after badges
+              lines.insert(insert_pos, chart_text)
+              readme_content = '\n'.join(lines)
+
+          # Write updated README
+          readme_path.write_text(readme_content)
+          print("Chart updated successfully!")
+          print("\nGenerated chart:")
+          print('\n'.join(chart_lines))
+          EOF
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Update star progress chart'
+          file_pattern: README.md
+
