@@ -8,6 +8,35 @@
 ![](https://img.shields.io/badge/Stars%202023%20⭐-34-yellow)
 ![](https://img.shields.io/badge/Stars%202024%20⭐-43-yellow)
 ![](https://img.shields.io/badge/Stars%202025%20⭐-8-yellow)
+### Star Progress Chart
+
+```
+
+                                                                                                  ⭐
+                                                                                                  ⭐
+                                                                                                  ⭐
+                                                                                                  ⭐
+        ⭐                                                                                         ⭐
+        ⭐                                   ⭐                                   ⭐                 ⭐
+        ⭐                                   ⭐                                   ⭐                 ⭐
+        ⭐                                   ⭐                                   ⭐                 ⭐
+        ⭐                                   ⭐                                   ⭐                 ⭐
+        ⭐                                   ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                                   ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                                   ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                                   ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                                   ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                                   ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                                   ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                 ⭐                 ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                 ⭐                 ⭐                 ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                 ⭐                 ⭐                 ⭐                 ⭐                 ⭐                 ⭐
+        ⭐                 ⭐                 ⭐                 ⭐                 ⭐                 ⭐                 ⭐
+------------------------------------------------------------------------------------------------------------------------------
+        36                10                33                24                34                43                8
+       2015              2020              2021              2022              2023              2024              2025
+```
+
 
 <p>
 Welcome to my Advent of Code repository! I tried to spice this repo up with a bunch of nice-to-haves. Since I started with AOC in 2020, I have haphazardly collected the daily Python files and manually collected the inputs. This had to change! So I incorporated the following features into my workflow:
