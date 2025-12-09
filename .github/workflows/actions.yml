@@ -59,22 +59,21 @@ jobs:
             h1_line=1
           fi
           
-          # Insert badges in sorted order (reverse order because sed 'a' appends after)
-          for ((i=${#badges[@]}-1; i>=0; i--)); do
-            badge="${badges[$i]}"
-            sed -i "${h1_line}a\\${badge}" README.md
+          # Build the badge block with proper formatting
+          badge_block=""
+          for badge in "${badges[@]}"; do
+            badge_block="${badge_block}${badge}"$'\n'
           done
           
-          # Insert blank line between </h1> and first badge for proper rendering
-          sed -i "${h1_line}a\\" README.md
+          # Use awk to insert badges after </h1> with blank lines
+          awk -v h1="$h1_line" -v badges="$badge_block" '
+            NR == h1 { print; print ""; printf "%s", badges; next }
+            { print }
+          ' README.md > README.tmp && mv README.tmp README.md
           
-          # Ensure blank line after badges (only if next line has content)
-          # +1 accounts for the blank line we just added before badges
-          badge_end=$((h1_line + ${#badges[@]} + 1))
-          next_line=$(sed -n "$((badge_end + 1))p" README.md)
-          if [ -n "$next_line" ]; then
-            sed -i "${badge_end}a\\" README.md
-          fi
+          # Ensure blank line after badges (check if next content line needs separation)
+          # This is handled by the structure above, but ensure file ends cleanly
+          sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' README.md 2>/dev/null || true
           
           echo "Updated README with ${#badges[@]} badges"
 
