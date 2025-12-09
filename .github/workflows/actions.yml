@@ -65,15 +65,11 @@ jobs:
             badge_block="${badge_block}${badge}"$'\n'
           done
           
-          # Use awk to insert badges after </h1> with blank lines
+          # Use awk to insert badges after </h1> with blank lines before and after
           awk -v h1="$h1_line" -v badges="$badge_block" '
-            NR == h1 { print; print ""; printf "%s", badges; next }
+            NR == h1 { print; print ""; printf "%s", badges; print ""; next }
             { print }
           ' README.md > README.tmp && mv README.tmp README.md
-          
-          # Ensure blank line after badges (check if next content line needs separation)
-          # This is handled by the structure above, but ensure file ends cleanly
-          sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' README.md 2>/dev/null || true
           
           echo "Updated README with ${#badges[@]} badges"
 
