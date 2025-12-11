@@ -7,7 +7,9 @@
 ![](https://img.shields.io/badge/Stars%202022%20⭐-24-yellow)
 ![](https://img.shields.io/badge/Stars%202023%20⭐-34-yellow)
 ![](https://img.shields.io/badge/Stars%202024%20⭐-43-yellow)
-![](https://img.shields.io/badge/Stars%202025%20⭐-18-yellow)
+![](https://img.shields.io/badge/Stars%202025%20⭐-22-yellow)
+
+
 
 
 
